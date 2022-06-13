@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline Task</title>
+    <link rel="icon" type="image/x-icon" href="./assets/logo.svg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="style/index.css">
+</head>
+
+<body>
+    <header>
+        <div class="headerDiv">
+            <h4 class="logo">Timeline Task</h4>
+            <div class="headerIcons">
+                <bottun class="icon nightMode">wb_sunny</bottun>
+                <bottun class="icon add">add</bottun>
+            </div>
+        </div>
+    </header>
+    <section class="timeLineContainer">
+        <span class="centerLine"></span>
+        <div class="timeLineList"></div>
+    </section>
+    <section class="addNewContainer">
+        <div class="addNewTaskDiv">
+
+            <h4 class="addNewTaskTitle">َAdd New Task</h4>
+
+            <div class="addNewInputSection">
+                <button class="closeAddNewTask icon">close</button>
+                <div class="inputDiv nameInputDiv">
+                    <input type="text" class="taskNameInput taskInput" placeholder="Please enter task name ...">
+                    <label class="taskNameLabel taskLabel">Name</label>
+                </div>
+                <div class="inputDiv descInputDiv">
+                    <textarea class="taskDescInput taskInput" cols="20" placeholder="Please enter task descrption ..."></textarea>
+                    <label class="taskDescLabel taskLabel">Description</label>
+                </div>
+                <div class="timeInput">
+                    <label>Time</label>
+                    <div>
+                        <input class="hourInput" type="number" placeholder="Hour" min="0" max="23">
+                        <span>:</span>
+                        <input class="minuteInput" type="number" placeholder="Minute" min="0" max="59">
+                    </div>
+                </div>
+            </div>
+
+            <button class="confirmAddBtn">Save</button>
+        </div>
+    </section>
+
+    <section class="modalContainer">
+        <div class="modalDiv">
+            <p class="modalMsg"></p>
+        </div>
+    </section>
+
+    <script src="script/index.js"></script>
+</body>
+
+</html>

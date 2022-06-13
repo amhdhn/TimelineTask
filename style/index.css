@@ -1,0 +1,548 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+:root {
+    --poppinFont: Poppins, Arial, Roboto;
+    --bgClr: #dddddd;
+    --taskBackClr: #3b3b3b;
+    --fade1BgClr: #dddddd3a;
+    --fade2BgClr: #dddddd00;
+    --btnClr: #222;
+    --centerLineClr: rgba(85, 85, 85, 0.288);
+    --borderTopClr: rgba(255, 255, 255, 0.253);
+    --darkTxtClr1: #000;
+    --darkTxtClr2: #1f1f1f;
+    --darkTxtClr3: #5a5a5a;
+    --taskTitleClr: #9c594d;
+}
+
+body,
+html {
+    background-color: var(--bgClr);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+
+/* header */
+
+header {
+    position: sticky;
+    top: 0;
+    height: 45px;
+    background-color: var(--bgClr);
+    z-index: 995;
+}
+
+.headerDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.headerDiv::after {
+    content: "";
+    width: 100%;
+    height: 10px;
+    position: absolute;
+    bottom: 0;
+    z-index: 999;
+    transform: translateY(100%);
+    background-image: linear-gradient(to bottom, var(--bgClr), var(--fade1BgClr), var(--fade2BgClr));
+}
+
+.logo {
+    font: .85em var(--poppinFont);
+    color: var(--btnClr);
+    font-weight: 500;
+    pointer-events: none;
+}
+
+.headerIcons {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.icon {
+    font: 1.4em "material icons";
+    color: var(--btnClr);
+    cursor: pointer;
+}
+
+.nightMode {
+    font-size: 1em;
+}
+
+
+/* modalContainer */
+
+.modalContainer {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 998;
+    width: 100%;
+    height: 50px;
+    max-width: 600px;
+    pointer-events: none;
+    animation: fadein .6s;
+}
+
+.modalContainer.active {
+    display: flex;
+}
+
+.modalDiv {
+    position: relative;
+    width: 90%;
+    height: 50px;
+    background-color: var(--bgClr);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.384);
+    border-radius: 7px;
+}
+
+.modalMsg {
+    font: .85em var(--poppinFont);
+    color: var(--darkTxtClr1);
+    height: 100%;
+    padding: 0 45px 0 15px;
+    display: flex;
+    align-items: center;
+}
+
+.modalMsg::before {
+    content: "\e001";
+    font: 1.5em "material icons";
+    color: tomato;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+/* timeLineContainer */
+
+.timeLineContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin-top: 15px;
+    min-height: 90vh;
+}
+
+.centerLine {
+    width: 6px;
+    height: 100%;
+    background-color: var(--centerLineClr);
+    position: absolute;
+}
+
+.timeLineList {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 0 20px;
+}
+
+.timeLineItem {
+    width: calc(50% + 4.6px);
+    z-index: 800;
+    display: flex;
+    gap: 15px;
+    direction: rtl;
+}
+
+.taskDot {
+    width: 10px;
+    height: 10px;
+    background-color: #555;
+    border-radius: 50%;
+    align-self: flex-end;
+    transform: translateY(-3px);
+}
+
+.taskContentDiv {
+    width: calc(100% - 25px);
+    background-color: var(--taskBackClr);
+    position: relative;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.activeTask .taskContentDiv {
+    background-color: var(--taskBackClr);
+    position: relative;
+    margin-top: 50px;
+}
+
+.activeTask .taskContentDiv::after {
+    position: absolute;
+    background-color: var(--taskTitleClr);
+    content: "Next Task";
+    font: .75em var(--poppinFont);
+    color: #ddd;
+    left: 0;
+    z-index: 995;
+    top: 0;
+    transform: translateY(-110%);
+    direction: ltr;
+    border-radius: 2px;
+    padding: 4px 15px;
+    text-align: center;
+}
+
+
+/* even child */
+
+.timeLineItem:nth-child(even) {
+    align-self: flex-end;
+    direction: ltr;
+}
+
+.timeLineItem:nth-child(even) .taskContentDiv {
+    border-radius: 4px 4px 4px 0;
+}
+
+.taskContentDiv::before {
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: 0;
+    border-bottom: 6.5px solid transparent;
+    border-top: 6.5px solid transparent;
+    content: "";
+}
+
+.timeLineItem:nth-child(even) .taskContentDiv::before {
+    left: 0;
+    border-right: 7px solid var(--taskBackClr);
+    transform: translateX(-100%);
+}
+
+
+/* odd child */
+
+.timeLineItem:nth-child(odd) .taskContentDiv::before {
+    right: 0;
+    border-left: 7px solid var(--taskBackClr);
+    transform: translateX(100%);
+}
+
+.timeLineItem:nth-child(odd) .taskContentDiv {
+    border-radius: 4px 4px 0 4px;
+}
+
+.timeLineItem:nth-child(odd) {
+    margin-left: 1px;
+}
+
+
+/* task element */
+
+.taskTitle {
+    font: .8em var(--poppinFont);
+    color: #fff;
+    direction: ltr;
+}
+
+.taskBody {
+    font: .71em var(--poppinFont);
+    color: rgb(204, 204, 204);
+    direction: ltr;
+}
+
+.taskTime {
+    font: .75em var(--poppinFont);
+    color: rgb(122, 122, 122);
+    border-top: 1px solid rgba(255, 255, 255, 0.151);
+    padding: 5px 0 0;
+    direction: rtl;
+}
+
+.controllDiv {
+    display: flex;
+    align-items: center;
+    direction: ltr;
+    gap: 1px;
+}
+
+.controllDiv button {
+    font: 1.2em "material icons";
+    color: #bbb;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    opacity: .3;
+    cursor: pointer;
+    transition: opacity .6s, background-color .6s;
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.taskContentDiv:hover .controllDiv button {
+    opacity: 1;
+}
+
+.controllDiv button:hover {
+    background-color: rgba(0, 0, 0, 0.589);
+}
+
+
+/* addNewContainer */
+
+.addNewContainer {
+    background-color: rgba(34, 34, 34, 0.712);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 997;
+    animation: fadein .6s;
+}
+
+.addNewTaskDiv {
+    width: 90%;
+    max-width: 400px;
+    height: 90%;
+    background-color: var(--bgClr);
+    border-radius: 7px;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    gap: 10px;
+    display: grid;
+    grid-template-rows: 40px calc( 100% - 100px) 40px;
+}
+
+.addNewInputSection {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.addNewTaskTitle {
+    font: .85em var(--poppinFont);
+    text-align: center;
+    color: var(--darkTxtClr1);
+}
+
+.closeAddNewTask {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    outline: none;
+    border: none;
+    background: transparent;
+}
+
+.inputDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    position: relative;
+}
+
+.taskLabel {
+    font: .75em var(--poppinFont);
+    color: var(--darkTxtClr3);
+    background-color: var(--bgClr);
+    position: absolute;
+    padding: 0 5px;
+    margin: 10px 0 0 7px;
+    display: flex;
+    pointer-events: none;
+    transition: margin-top .6s;
+}
+
+.taskInput {
+    font: .75em var(--poppinFont);
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid var(--darkTxtClr3);
+    height: 40px;
+    box-sizing: border-box;
+    padding: 0 15px;
+    transition: transform .6s;
+}
+
+.taskInput::placeholder {
+    color: transparent;
+    transition: color .2s;
+}
+
+.taskInput:focus::placeholder {
+    color: var(--darkTxtClr3);
+    transition: color .6s .2s;
+}
+
+.taskInput:focus+.taskLabel {
+    margin: -12px 0 0 7px;
+}
+
+.taskInput:not(:placeholder-shown)+.taskLabel {
+    margin: -12px 0 0 7px;
+}
+
+.taskDescInput {
+    padding: 15px;
+    resize: none;
+    height: auto;
+}
+
+
+/* timeInput */
+
+.timeInput {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.timeInput label {
+    font: .75em var(--poppinFont);
+    color: var(--darkTxtClr3);
+    margin-left: 10px;
+}
+
+.timeInput div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.timeInput input {
+    width: 80px;
+    outline: none;
+    border: none;
+    height: 35px;
+    background-color: transparent;
+    padding: 0 10px;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--darkTxtClr3);
+    color: var(--darkTxtClr1);
+    text-align: center;
+    font: .75em var(--poppinFont);
+}
+
+.timeInput input[type=number]::-webkit-inner-spin-button,
+.timeInput input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+
+/* confirmAddBtn */
+
+.confirmAddBtn {
+    outline: none;
+    border: none;
+    background-color: rgb(84, 108, 173);
+    color: #ddd;
+    height: 35px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color .6s;
+    font: .85em var(--poppinFont);
+}
+
+.confirmAddBtn:hover {
+    background-color: rgb(70, 89, 139);
+}
+
+
+/* noResultDiv */
+
+.noResultDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadein .6s;
+}
+
+.noResultText {
+    font: .85em var(--poppinFont);
+    color: var(--darkTxtClr1);
+    margin-top: 200px;
+    position: relative;
+}
+
+.noResultText::before {
+    content: "\f012";
+    font: 4em "material icons";
+    color: var(--darkTxtClr3);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: -80px;
+}
+
+
+/* active */
+
+.active {
+    display: flex;
+}
+
+@media screen and (min-width: 649px) {
+    .timeLineItem {
+        gap: 30px;
+    }
+    .taskContentDiv {
+        padding: 20px;
+        font-size: 18px;
+        gap: 10px;
+    }
+    .timeLineItem:nth-child(even) .taskContentDiv {
+        border-radius: 7px 7px 7px 0;
+    }
+    .timeLineItem:nth-child(odd) .taskContentDiv {
+        border-radius: 7px 7px 0 7px;
+    }
+    .taskTime {
+        padding: 10px 0 0;
+    }
+}
+
+@media screen and (min-width: 1100px) {
+    header,
+    .timeLineContainer {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
